@@ -9,11 +9,11 @@ from alembic import context
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
-from app.config import settings
-from app.database import Base
-from app.hotels.models import Hotels, Rooms
-from app.users.models import Users
-from app.bookings.models import Bookings
+from config import settings
+from database import Base
+from hotels.models import Hotels, Rooms
+from users.models import Users
+from bookings.models import Bookings
 
 
 # this is the Alembic Config object, which provides
