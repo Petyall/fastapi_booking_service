@@ -1,15 +1,16 @@
-from fastapi import APIRouter
-from bookings.schemas import SBooking
-from sqlalchemy import select
+from fastapi import APIRouter, Depends
+from users.dependences import get_current_user
 from bookings.services import BookingService
-from database import async_session_maker
-from bookings.models import Bookings
+from users.models import Users
 
+
+# Что-то типо создания приложения, в котором будут все эндпоинты
 router = APIRouter(
     prefix="/bookings",
     tags=["Бронирования"],
 )
 
+
 @router.get("")
-async def get_bookings() -> list[SBooking]:
-    return await BookingService.find_all()
+async def get_bookings(user: Users = Depends(get_current_user)): #-> list[SBooking]:
+    return await BookingService.find_all(user_id=user.id)

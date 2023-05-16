@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import date
 
+
 class SBooking(BaseModel):
     id: int 
     room_id: int 
@@ -11,5 +12,6 @@ class SBooking(BaseModel):
     total_cost: int 
     total_days: int 
 
+    # Позволяет преобразовывать json в query и обратно
     class Config:
         orm_mode = True
