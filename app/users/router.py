@@ -24,9 +24,23 @@ async def register_user(user_data: SUserAuth):
 
 @router.post("/login")
 async def login_user(response: Response, user_data: SUserAuth):
+    """
+    Logs in a user by authenticating their email and password. 
+
+    Args:
+        response (Response): A FastAPI Response object.
+        user_data (SUserAuth): A Pydantic schema class representing user authentication data.
+
+    Returns:
+        str: The access token generated for the user.
+    """
     user = await authenticate_user(user_data.email, user_data.password)
     access_token = create_access_token({"sub": str(user.id)})
-    response.set_cookie("booking_access_token", access_token, httponly=True)
+    response.set_cookie(
+        key="booking_access_token",
+        value=access_token,
+        httponly=True
+    )
     return access_token
 
 

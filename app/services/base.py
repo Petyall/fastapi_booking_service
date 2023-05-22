@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert
+from sqlalchemy import delete, select, insert
 from database import async_session_maker
 
 class BaseService:
@@ -38,3 +38,10 @@ class BaseService:
             query = insert(cls.model).values(**data)
             await session.execute(query)
             await session.commit()
+
+    @classmethod
+    async def select_all_filter(cls, *args, **kwargs):
+        async with async_session_maker() as session:
+            query = select(cls.model).filter(*args, **kwargs)
+            result = await session.execute(query)
+            return result.scalars().all()

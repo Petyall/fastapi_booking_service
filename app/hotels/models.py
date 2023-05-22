@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, JSON, ForeignKey
 from database import Base
 
+
 class Hotels(Base):
     __tablename__ = "hotels"
 
@@ -10,6 +11,7 @@ class Hotels(Base):
     services = Column(JSON)
     rooms_quantity = Column(Integer, nullable=False)
     image_id  = Column(Integer)
+
 
 class Rooms(Base):
     __tablename__ = "rooms"
