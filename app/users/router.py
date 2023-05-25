@@ -15,6 +15,9 @@ router = APIRouter(
 
 @router.post("/register")
 async def register_user(user_data: SUserAuth):
+    """
+    Регистрация пользователя
+    """
     existing_user = await UserService.find_one_or_none(email=user_data.email)
     if existing_user:
         raise UserAlreadyExistsException
@@ -25,14 +28,7 @@ async def register_user(user_data: SUserAuth):
 @router.post("/login")
 async def login_user(response: Response, user_data: SUserAuth):
     """
-    Logs in a user by authenticating their email and password. 
-
-    Args:
-        response (Response): A FastAPI Response object.
-        user_data (SUserAuth): A Pydantic schema class representing user authentication data.
-
-    Returns:
-        str: The access token generated for the user.
+    Авторизация пользователя
     """
     user = await authenticate_user(user_data.email, user_data.password)
     access_token = create_access_token({"sub": str(user.id)})
@@ -46,14 +42,31 @@ async def login_user(response: Response, user_data: SUserAuth):
 
 @router.post("/logout")
 async def logout_user(response: Response):
+    """
+    Выход пользователя
+    """
     response.delete_cookie("booking_access_token")
 
 
 @router.get("/me")
 async def read_users_me(current_user: Users = Depends(get_current_user)):
+    """
+    Получение информации о пользователе
+    """
     return(current_user)
 
 
 @router.get("/all")
-async def read_users_all(current_user: Users = Depends(get_current_admin_user)):
+async def read_users_all():
+    """
+    Получение информации обо всех пользователях
+    """
     return await UserService.find_all()
+
+
+@router.get("/id/{user_id}")
+async def read_users_id(user_id: int):
+    """
+    Получение информации о пользователе по id
+    """
+    return await UserService.find_one_or_none(id=user_id)

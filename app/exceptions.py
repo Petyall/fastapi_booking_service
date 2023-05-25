@@ -8,13 +8,20 @@ class BookingException(HTTPException):  # <-- наследуемся от HTTPEx
     def __init__(self):
         super().__init__(status_code=self.status_code, detail=self.detail)
 
+
+
 class UserAlreadyExistsException(BookingException):
     status_code=status.HTTP_409_CONFLICT
     detail="Пользователь уже существует"
 
-class IncorrectEmailOrPasswordException(BookingException):
+class UserIsNotPresentException(BookingException):
     status_code=status.HTTP_401_UNAUTHORIZED
-    detail="Неверная почта или пароль"
+
+class UserHasNotBookingsException(BookingException):
+    status_code=status.HTTP_404_NOT_FOUND
+    detail="У данного пользователя нет ни одного бронирования"
+
+
 
 class TokenExpiredException(BookingException):
     status_code=status.HTTP_401_UNAUTHORIZED
@@ -28,8 +35,11 @@ class IncorrectFormatTokenException(BookingException):
     status_code=status.HTTP_401_UNAUTHORIZED
     detail="Неверный формат токена"
 
-class UserIsNotPresentException(BookingException):
+class IncorrectEmailOrPasswordException(BookingException):
     status_code=status.HTTP_401_UNAUTHORIZED
+    detail="Неверная почта или пароль"
+
+
 
 class RoomCannotBeBooked(BookingException):
     status_code=status.HTTP_409_CONFLICT
