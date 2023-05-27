@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>ОТЕЛЬЧИК</title>
+ <link rel="stylesheet" href="{{ url_for('static', path='/css/hotels.css') }}">
+</head>
+<body>
+ <header>
+  <h1>Сервис бронирования - отельчик</h1>
+ </header>
+
+ <nav>
+  <ul>
+   <li><a href="#">Главная</a></li>
+   <li><a href="#">О нас</a></li>
+   <li><a href="#">Контакты</a></li>
+  </ul>
+ </nav>
+
+ <main>
+
+    <form>
+        <label for="location">Введите название города:</label>
+        <input type="text" id="location" name="location" required>
+        <label for="date_from">Дата заезда:</label>
+        <input type="date" id="date_from" name="date_from" required>
+        <label for="date_to">Дата выезда:</label>
+        <input type="date" id="date_to" name="date_to" required>
+        <button type="submit">Найти отели</button>
+    </form>
+
+    {% for hotel in hotels %}
+    <div style="display: flex; margin-bottom: 10px; margin-left: 300px; margin-right: 5px;">
+        <img src="{{ url_for('static', path='images/hotels/' + hotel.image_id|string + '.webp') }}" alt="Фото отеля" width="250">
+        <div>
+            <h2>{{hotel.name}}</h2>
+            <p class="location">{{hotel.location}}</p>
+            <button>Забронировать</button>
+        </div>
+    </div>
+    {% endfor %}
+
+ </main>
+
+ <footer>
+  <p>&copy; 2023 Сервис бронирования - отельчик</p>
+ </footer>
+
+</body>
+</html>

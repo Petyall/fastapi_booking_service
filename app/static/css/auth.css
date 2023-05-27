@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+  }
+  
+  .form-wrapper {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 auto 20px auto;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .form-wrapper h1 {
+    margin-top: 0;
+  }
+  
+  .form-wrapper form input[type="text"],
+  .form-wrapper form input[type="email"],
+  .form-wrapper form input[type="password"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+  }
+  
+  .form-wrapper form button[type="submit"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: none;
+    background-color: #4CAF50;
+    color: #fff;
+  }
+  
+  .form-wrapper p {
+    margin-top: 10px;
+  }
+  
+  .form-wrapper a {
+    color: #4CAF50;
+    text-decoration: none;
+  }

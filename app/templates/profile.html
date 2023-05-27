@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>Здравствуйте, {{user.email}}!</h1>
+        <h2>Ваши бронирования</h2>
+        {% if bookings %}
+        <ul>
+            {% for booking in bookings %}
+            <li>
+                <div class="booking">
+                <img src="{{ url_for('static', path='images/rooms/' + booking.image_id|string + '.webp') }}" alt="Фото комнаты" width="250">
+                <div class="booking-info">
+                    <div class="hotel-name">{{ booking.name }}</div>
+                    <div class="date-range">С {{ booking.date_from }} по {{ booking.date_to }}</div>
+                    <div class="total-cost">Стоимость: {{ booking.total_cost }}</div>
+                </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>На данный момент у вас нет ни одного бронирования!</p>
+        {% endif %}
+    </center>
+</body>
+</html>

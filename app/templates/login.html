@@ -1,0 +1,34 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Авторизация</title>
+  </head>
+  <body>
+    <form method="post" action="/login">
+      <input type="text" name="email" placeholder="Введите имя пользователя">
+      <input type="password" name="password" placeholder="Введите пароль">
+      <button type="submit">Войти</button>
+    </form>
+  </body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Регистрация и Авторизация</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/auth.css') }}">
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <h1>Авторизация</h1>
+      <form method="post" action="/login">
+        <input type="text" name="email" placeholder="Введите имя пользователя" required>
+        <input type="password" name="password" placeholder="Введите пароль" required>
+        <button type="submit">Войти</button>
+      </form>
+      <p>Еще не зарегистрированы? <a href="#">Зарегистрируйтесь</a>.</p>
+    </div>
+  </body>
+</html>
