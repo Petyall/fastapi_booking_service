@@ -1,34 +1,42 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <title>Авторизация</title>
-  </head>
-  <body>
-    <form method="post" action="/login">
-      <input type="text" name="email" placeholder="Введите имя пользователя">
-      <input type="password" name="password" placeholder="Введите пароль">
-      <button type="submit">Войти</button>
-    </form>
-  </body>
-</html> -->
-
-
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Регистрация и Авторизация</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/auth.css') }}">
-  </head>
-  <body>
+
+<head>
+  <title>Регистрация и Авторизация</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/auth.css') }}">
+</head>
+<header>
+  <h1>Сервис бронирования - отельчик</h1>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="/">Главная</a></li>
+  </ul>
+</nav>
+
+<body>
+  <div class="form-wrapper">
+    {% if message %}
+      <h1>{{ message }}</h1>
+    {% endif %}
+    <h2>Авторизация</h2>
+    <form method="post" action="login">
+      <input type="text" name="email" placeholder="Введите имя пользователя" required>
+      <input type="password" name="password" placeholder="Введите пароль" required>
+      <button type="submit">Войти</button>
+    </form>
+    <p>Еще не зарегистрированы? <a href="#">Зарегистрируйтесь ниже</a>.</p>
     <div class="form-wrapper">
-      <h1>Авторизация</h1>
-      <form method="post" action="/login">
-        <input type="text" name="email" placeholder="Введите имя пользователя" required>
-        <input type="password" name="password" placeholder="Введите пароль" required>
-        <button type="submit">Войти</button>
+      <h2>Регистрация</h2>
+      <form method="post" action="registration">
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="password" id="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Зарегистрироваться</button>
       </form>
-      <p>Еще не зарегистрированы? <a href="#">Зарегистрируйтесь</a>.</p>
+      <p>Уже зарегистрированы? <a href="#">Авторизуйтесь выше</a>.</p>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

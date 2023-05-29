@@ -1,9 +1,7 @@
 from datetime import date
 from sqlalchemy import func
-
 from hotels.schemas import SRoom, SRoomsRoomLeft, SHotelRoomsLeft
 from hotels.models import Rooms, Hotels
-
 from services.base import BaseService
 
 from bookings.services import BookingService
@@ -50,7 +48,7 @@ class HotelService(BaseService):
                 result.append(hotel)
         # Возврат списка отелей с обновленным количеством комнат на заданную дату
         return result
-
+    
 
 class RoomService(BaseService):
     model = Rooms
