@@ -2,13 +2,13 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 
-from users.schemas import SUserAuth
-from users.router import register_user, read_users_me
-from users.auth import authenticate_user, create_access_token
+from app.users.schemas import SUserAuth
+from app.users.router import register_user, read_users_me
+from app.users.auth import authenticate_user, create_access_token
 
-from bookings.services import BookingService
+from app.bookings.services import BookingService
 
-from hotels.router import get_hotels_by_location
+from app.hotels.router import get_hotels_by_location
 
 
 router = APIRouter(
@@ -16,7 +16,7 @@ router = APIRouter(
     tags=["Фронтенд"],
 )
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
 
 # РАБОТА С ГЛАВНОЙ СТРАНИЦЕЙ

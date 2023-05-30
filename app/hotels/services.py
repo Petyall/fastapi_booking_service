@@ -1,10 +1,10 @@
 from datetime import date
 from sqlalchemy import func
-from hotels.schemas import SRoom, SRoomsRoomLeft, SHotelRoomsLeft
-from hotels.models import Rooms, Hotels
-from services.base import BaseService
+from app.hotels.schemas import SRoom, SRoomsRoomLeft, SHotelRoomsLeft
+from app.hotels.models import Rooms, Hotels
+from app.services.base import BaseService
 
-from bookings.services import BookingService
+from app.bookings.services import BookingService
 
  
 class HotelService(BaseService):

@@ -1,12 +1,12 @@
 from datetime import date
 from sqlalchemy import delete, insert, select, func, and_, or_
 
-from bookings.models import Bookings
-from hotels.models import Rooms
-from services.base import BaseService
+from app.bookings.models import Bookings
+from app.hotels.models import Rooms
+from app.services.base import BaseService
 
-from database import async_session_maker
-from exceptions import BookingCannotBeFound, IncorrectDataFormat, RoomCannotBeBooked
+from app.database import async_session_maker
+from app.exceptions import BookingCannotBeFound, IncorrectDataFormat, RoomCannotBeBooked
 
 
 class BookingService(BaseService):
