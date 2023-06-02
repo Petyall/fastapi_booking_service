@@ -79,11 +79,13 @@ class BookingService(BaseService):
                         date_to=date_to,
                         price=price,
                     )
-                    .returning(Bookings.id, Bookings.user_id, Bookings.room_id)
+                    .returning(Bookings)
+                    # .returning(Bookings.id, Bookings.user_id, Bookings.room_id)
                 )
                 new_booking = await session.execute(add_booking)
                 await session.commit()
-                return new_booking.mappings().one()
+                return new_booking.scalar()
+                # return new_booking.mappings().one()
             else:
                 return RoomCannotBeBooked
             
