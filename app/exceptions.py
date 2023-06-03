@@ -21,6 +21,9 @@ class UserHasNotBookingsException(BookingException):
     status_code=status.HTTP_404_NOT_FOUND
     detail="У данного пользователя нет ни одного бронирования"
 
+class NotEnoughAuthorityException(BookingException):
+    status_code=status.HTTP_409_CONFLICT
+    detail="У данного пользователя недостаточно прав"
 
 
 class TokenExpiredException(BookingException):

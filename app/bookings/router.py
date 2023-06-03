@@ -49,3 +49,4 @@ async def delete_booking(booking_id: int, user: Users = Depends(get_current_user
     Удаление бронирования пользователем
     """
     await BookingService.delete_booking(booking_id=booking_id, user_id=user.id)
+    return f"Бронирование #{booking_id} пользователя {user.email} удалено"

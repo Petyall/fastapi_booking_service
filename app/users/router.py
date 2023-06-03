@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from app.exceptions import IncorrectEmailOrPasswordException, UserAlreadyExistsException
+from app.exceptions import IncorrectEmailOrPasswordException, UserAlreadyExistsException, NotEnoughAuthorityException
 from app.users.dependences import get_current_user, get_current_admin_user
 from app.users.models import Users
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
@@ -23,6 +23,7 @@ async def register_user(user_data: SUserAuth):
         raise UserAlreadyExistsException
     hashed_password = get_password_hash(user_data.password)
     await UserService.add(email=user_data.email, hashed_password=hashed_password)
+    return f"Пользователь {user_data.email} успешно зарегистрирован"
 
 
 @router.post("/login")
@@ -39,7 +40,7 @@ async def login_user(response: Response, user_data: SUserAuth):
         value=access_token,
         httponly=True
     )
-    return access_token
+    return f"Пользователь {user_data.email} успешно авторизован"
 
 
 @router.post("/logout")
@@ -48,6 +49,7 @@ async def logout_user(response: Response):
     Выход пользователя
     """
     response.delete_cookie("booking_access_token")
+    return "До свидания!"
 
 
 @router.get("/me")
@@ -59,16 +61,22 @@ async def read_users_me(current_user: Users = Depends(get_current_user)):
 
 
 @router.get("/all")
-async def read_users_all():
+async def read_users_all(current_user: Users = Depends(get_current_user)):
     """
     Получение информации обо всех пользователях
     """
-    return await UserService.find_all()
+    if current_user.role_id == 2:
+        return await UserService.find_all()
+    else:
+        raise NotEnoughAuthorityException
 
 
 @router.get("/id/{user_id}")
-async def read_users_id(user_id: int):
+async def read_users_id(user_id: int, current_user: Users = Depends(get_current_user)):
     """
     Получение информации о пользователе по id
     """
-    return await UserService.find_one_or_none(id=user_id)
+    if current_user.role_id == 2:
+        return await UserService.find_one_or_none(id=user_id)
+    else:
+        raise NotEnoughAuthorityException

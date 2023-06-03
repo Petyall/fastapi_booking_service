@@ -1,5 +1,5 @@
 from sqladmin import ModelView
-from app.users.models import Users
+from app.users.models import Users, Role
 from app.bookings.models import Bookings
 from app.hotels.models import Hotels, Rooms
 
@@ -12,6 +12,13 @@ class UsersAdmin(ModelView, model=Users):
     name = "Пользователь"
     name_plural = "Пользователи"
     icon = "fa-solid fa-user"
+
+
+# Модель Ролей для админки
+class RoleAdmin(ModelView, model=Role):
+    column_list = [Role.id, Role.name]
+    name = "Роль"
+    name_plural = "Роли"
 
 
 # Модель бронирований для админки
@@ -36,5 +43,6 @@ class RoomsAdmin(ModelView, model=Rooms):
     column_list += [Rooms.hotel, Rooms.booking]
     name = "Комната"
     name_plural = "Комнаты"
+
 
 
