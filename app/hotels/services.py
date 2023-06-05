@@ -1,9 +1,9 @@
 from datetime import date
 from sqlalchemy import func
-from app.hotels.schemas import SRoom, SRoomsRoomLeft, SHotelRoomsLeft
+
+from app.hotels.schemas import SRoom
 from app.hotels.models import Rooms, Hotels
 from app.services.base import BaseService
-
 from app.bookings.services import BookingService
 
  
@@ -25,22 +25,19 @@ class HotelService(BaseService):
         """
         # Создание пустого списка для будушего наполнения отелями
         result: list = []
-        # Поиск отелей заданному городу
-        hotels = await cls.select_all_filter(
-            func.lower(Hotels.location).like(f"%{location.lower()}%"))
+        # Поиск отелей по заданному городу
+        hotels = await cls.select_all_filter(func.lower(Hotels.location).like(f"%{location.lower()}%"))
         # Цикл для подсчета свободных номеров в отелях
         for hotel in hotels:
             # Общее количество комнат
             total_rooms: int = hotel.rooms_quantity
             # Количество комнат в конкретном отеле
-            rooms: list[int] = [room.id for room in 
-                await RoomService.select_all_filter(Rooms.hotel_id == hotel.id)]
+            rooms: list[int] = [room.id for room in await RoomService.select_all_filter(Rooms.hotel_id == hotel.id)]
             # Переменная для подсчета забронированных номеров
             qty_booked_rooms: int = 0
             # Цикл подсчитывающий забронированные комнаты
             for room_id in rooms:
-                qty_booked_rooms += len(
-                    await BookingService.get_booked_rooms(room_id, date_from, date_to))
+                qty_booked_rooms += len(await BookingService.get_booked_rooms(room_id, date_from, date_to))
             # Проверка осталась ли хоть одна комната в наличии
             if total_rooms > qty_booked_rooms:
                 hotel.rooms_left = total_rooms - qty_booked_rooms
@@ -85,3 +82,4 @@ class RoomService(BaseService):
                 room.rooms_left = rooms_left
                 result.append(room)
         return result
+    

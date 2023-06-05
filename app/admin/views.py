@@ -1,4 +1,5 @@
 from sqladmin import ModelView
+
 from app.users.models import Users, Role
 from app.bookings.models import Bookings
 from app.hotels.models import Hotels, Rooms
@@ -23,7 +24,7 @@ class RoleAdmin(ModelView, model=Role):
 
 # Модель бронирований для админки
 class BookingsAdmin(ModelView, model=Bookings):
-    column_list = [column.name for column in Bookings.__table__.columns] # Цикл для получения названий колонок БД
+    column_list = [column.name for column in Bookings.__table__.columns] # Цикл для получения названий всех колонок БД
     column_list += [Bookings.user, Bookings.room] # Расширение списка названия колонок пользователем
     name = "Бронь"
     name_plural = "Бронирования"
@@ -31,16 +32,16 @@ class BookingsAdmin(ModelView, model=Bookings):
 
 # Модель отелей для админки
 class HotelsAdmin(ModelView, model=Hotels):
-    column_list = [column.name for column in Hotels.__table__.columns]
-    column_list += [Hotels.room]
+    column_list = [column.name for column in Hotels.__table__.columns] # Цикл для получения названий всех колонок БД
+    column_list += [Hotels.room] # Расширение списка названия колонок комнатой
     name = "Отель"
     name_plural = "Отели"
 
 
 # Модель комнат для админки
 class RoomsAdmin(ModelView, model=Rooms):
-    column_list = [column.name for column in Rooms.__table__.columns]
-    column_list += [Rooms.hotel, Rooms.booking]
+    column_list = [column.name for column in Rooms.__table__.columns] # Цикл для получения названий всех колонок БД
+    column_list += [Rooms.hotel, Rooms.booking] # Расширение списка названия колонок отелем и бронированием
     name = "Комната"
     name_plural = "Комнаты"
 

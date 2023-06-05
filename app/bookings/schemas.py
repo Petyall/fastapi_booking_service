@@ -33,3 +33,4 @@ class SBookingWithRooms(BaseModel):
     # Позволяет преобразовывать json в query и обратно
     class Config:
         orm_mode = True
+        

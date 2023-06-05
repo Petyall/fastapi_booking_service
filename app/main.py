@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from sqladmin import Admin
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from redis import asyncio as aioredis
+from sqladmin import Admin
 
 from app.admin.views import UsersAdmin, BookingsAdmin, RoomsAdmin, HotelsAdmin, RoleAdmin
 from app.bookings.router import router as router_bookings

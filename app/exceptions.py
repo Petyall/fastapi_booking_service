@@ -1,15 +1,17 @@
 from fastapi import HTTPException, status
 
 
-class BookingException(HTTPException):  # <-- наследуемся от HTTPException, который наследован от Exception
-    status_code = 500  # <-- задаем значения по умолчанию
+# Создание класса для обработки исключений, наследующийся от HTTPException
+class BookingException(HTTPException):
+    # Значения по умолчанию
+    status_code = 500
     detail = ""
     
     def __init__(self):
         super().__init__(status_code=self.status_code, detail=self.detail)
 
 
-
+# Ошибки по работе с пользователями
 class UserAlreadyExistsException(BookingException):
     status_code=status.HTTP_409_CONFLICT
     detail="Пользователь уже существует"
@@ -26,6 +28,7 @@ class NotEnoughAuthorityException(BookingException):
     detail="У данного пользователя недостаточно прав"
 
 
+# Ошибки по работе с авторизацией
 class TokenExpiredException(BookingException):
     status_code=status.HTTP_401_UNAUTHORIZED
     detail="Истек срок действия токена"
@@ -44,6 +47,7 @@ class IncorrectEmailOrPasswordException(BookingException):
 
 
 
+# Ошибки по работе с бронированиями
 class RoomCannotBeBooked(BookingException):
     status_code=status.HTTP_409_CONFLICT
     detail="Не осталось свободных номеров"

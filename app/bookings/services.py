@@ -4,7 +4,6 @@ from sqlalchemy import delete, insert, select, func, and_, or_
 from app.bookings.models import Bookings
 from app.hotels.models import Rooms
 from app.services.base import BaseService
-
 from app.database import async_session_maker
 from app.exceptions import BookingCannotBeFound, IncorrectDataFormat, RoomCannotBeBooked
 
@@ -66,6 +65,7 @@ class BookingService(BaseService):
             rooms_left: int = rooms_left.scalar()
             # Проверка наличия хотя бы 1 комнаты
             if rooms_left > 0:
+                # Получение стоимости бронирования комнаты
                 get_price = select(Rooms.price).filter_by(id=room_id)
                 price = await session.execute(get_price)
                 price: int = price.scalar()
@@ -80,12 +80,10 @@ class BookingService(BaseService):
                         price=price,
                     )
                     .returning(Bookings)
-                    # .returning(Bookings.id, Bookings.user_id, Bookings.room_id)
                 )
                 new_booking = await session.execute(add_booking)
                 await session.commit()
                 return new_booking.scalar()
-                # return new_booking.mappings().one()
             else:
                 return RoomCannotBeBooked
             
@@ -143,8 +141,10 @@ class BookingService(BaseService):
             query = select(cls.model).filter_by(id=booking_id, user_id=user_id)
             booking = await session.execute(query)
             booking = booking.scalar_one_or_none()
+            # Возврат ошибки, если бронирование не найдено
             if booking is None:
                 raise BookingCannotBeFound
+            # Удаление бронирования
             query = delete(cls.model).filter_by(id=booking_id, user_id=user_id)
             await session.execute(query)
             await session.commit()
