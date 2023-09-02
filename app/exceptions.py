@@ -63,3 +63,7 @@ class BookingCannotBeFound(BookingException):
 class IncorrectDataFormat(BookingException):
     status_code=status.HTTP_409_CONFLICT
     detail="Дата введена неправильно"
+
+class CannotDeleteBooking(BookingException):
+    status_code=status.HTTP_409_CONFLICT
+    detail="Не удалось удалить бронирование"

@@ -1,3 +1,5 @@
+import time
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,6 +17,7 @@ from app.images.router import router as router_images
 from app.database import engine
 from app.config import settings
 from app.admin.admin import authentication_backend
+from app.logger import logger
 
 
 app = FastAPI()
@@ -52,3 +55,16 @@ admin.add_view(RoleAdmin)
 admin.add_view(BookingsAdmin)
 admin.add_view(HotelsAdmin)
 admin.add_view(RoomsAdmin)
+
+# Middleware для логгирования
+@app.middleware("http")
+async def add_process_time_header(request, call_next):
+    # Дата начала процесса
+    start_time = time.time()
+    # Запрос
+    response = await call_next(request)
+    # Время выполнения процесса
+    process_time = time.time() - start_time
+    # Вывод информации в консоль (логгирование)
+    logger.info(f"Process time: {round(process_time, 4)}")
+    return response

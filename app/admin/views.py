@@ -44,6 +44,3 @@ class RoomsAdmin(ModelView, model=Rooms):
     column_list += [Rooms.hotel, Rooms.booking] # Расширение списка названия колонок отелем и бронированием
     name = "Комната"
     name_plural = "Комнаты"
-
-
-

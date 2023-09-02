@@ -18,11 +18,14 @@ router = APIRouter(
 @router.get("/{location}")
 # Кеширование запроса на полчаса
 @cache(expire=1800)
-async def get_hotels_by_location(location: str, date_from: date, date_to: date) -> list[SHotelRoomsLeft]:
+async def get_hotels_by_location(location: str, date_from: date, date_to: date):
     """
     Поиск отеля по заданному городу и дате заезда и выезда
     """
-    return await HotelService.find_hotels_by_location(location, date_from, date_to)
+    hotels = await HotelService.find_hotels_by_location(location, date_from, date_to)
+    if not hotels:
+        raise HotelCannotBeFound
+    return hotels
 
 
 @router.get("/id/{hotel_id}")
