@@ -51,9 +51,9 @@ class HotelService(BaseService):
             return result
         except (SQLAlchemyError, Exception) as e:
             if isinstance(e, SQLAlchemyError):
-                msg = "Ошибка базы данных при поиске отелей"
+                msg = "Database error when finding hotels"
             elif isinstance(e, Exception):
-                msg = "Неизвестная ошибка при поиске отелей"
+                msg = "Unknown error when finding hotels"
             extra = {"location": location,"date_from": date_from, "date_to": date_to}
             logger.error(msg, extra=extra, exc_info=True)
     

@@ -1,6 +1,6 @@
 from datetime import date
 from pydantic import parse_obj_as
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from app.exceptions import RoomCannotBeBooked, UserHasNotBookingsException, CannotDeleteBooking
 from app.tasks.tasks import send_booking_confirmation_email
@@ -58,3 +58,6 @@ async def delete_booking(booking_id: int, user: Users = Depends(get_current_user
     booking =  await BookingService.delete_booking(booking_id=booking_id, user_id=user.id)
     if not booking:
         raise CannotDeleteBooking()
+    else:
+        return {"message": f"Бронирование #{booking_id} успешно удалено"}
+    

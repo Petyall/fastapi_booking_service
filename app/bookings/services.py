@@ -1,4 +1,5 @@
 from datetime import date
+from fastapi import HTTPException
 from sqlalchemy import delete, insert, select, func, and_, or_
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -91,9 +92,9 @@ class BookingService(BaseService):
                     return RoomCannotBeBooked
         except (SQLAlchemyError, Exception) as e:
             if isinstance(e, SQLAlchemyError):
-                msg = "Ошибка базы данных при добавлении бронирования"
+                msg = "Database error when adding booking"
             elif isinstance(e, Exception):
-                msg = "Неизвестная ошибка при добавлении бронирования"
+                msg = "Unknown error when adding booking"
             extra = {"user_id": user_id, "room_id": room_id, "date_from": date_from, "date_to": date_to}
             logger.error(msg, extra=extra, exc_info=True)
             
@@ -136,9 +137,9 @@ class BookingService(BaseService):
                 return bookings.mappings().all()
         except (SQLAlchemyError, Exception) as e:
             if isinstance(e, SQLAlchemyError):
-                msg = "Ошибка базы данных при поиске бронирований пользователя"
+                msg = "Database error when finding user bookings"
             elif isinstance(e, Exception):
-                msg = "Неизвестная ошибка при поиске бронирований пользователя"
+                msg = "Unknown error when finding user bookings"
             extra = {"user_id": user_id}
             logger.error(msg, extra=extra, exc_info=True)
 
@@ -171,9 +172,9 @@ class BookingService(BaseService):
                 return f"Бронирование #{booking_id} удалено"
         except (SQLAlchemyError, Exception) as e:
             if isinstance(e, SQLAlchemyError):
-                msg = "Ошибка базы данных при поиске бронирований пользователя"
+                msg = "Database error when deleting booking"
             elif isinstance(e, Exception):
-                msg = "Неизвестная ошибка при поиске бронирований пользователя"
+                msg = "Unknown error when deleting booking"
             extra = {"user_id": user_id, "booking_id": booking_id}
             logger.error(msg, extra=extra, exc_info=True)
 
@@ -204,8 +205,8 @@ class BookingService(BaseService):
             )
         except (SQLAlchemyError, Exception) as e:
             if isinstance(e, SQLAlchemyError):
-                msg = "Ошибка базы данных при поиске забронированных комнат"
+                msg = "Database error when finding booked rooms"
             elif isinstance(e, Exception):
-                msg = "Неизвестная ошибка при поиске забронированных комнат"
+                msg = "Unknown error when finding booked rooms"
             extra = {"room_id": room_id, "date_from": date_from, "date_to": date_to}
             logger.error(msg, extra=extra, exc_info=True)

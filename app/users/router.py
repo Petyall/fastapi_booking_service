@@ -4,7 +4,7 @@ from app.exceptions import IncorrectEmailOrPasswordException, UserAlreadyExistsE
 from app.users.dependences import get_current_user
 from app.users.models import Users
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
-from app.users.services import UserService
+from app.users.services import UserService, RoleService
 from app.users.schemas import SUserAuth
 
 
@@ -97,4 +97,5 @@ async def read_users_id(user_id: int, current_user: Users = Depends(get_current_
     # Возврат ошибки, если пользователь не админ
     else:
         raise NotEnoughAuthorityException
+    
     
