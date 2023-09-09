@@ -46,7 +46,6 @@ class IncorrectEmailOrPasswordException(BookingException):
     detail="Неверная почта или пароль"
 
 
-
 # Ошибки по работе с бронированиями
 class RoomCannotBeBooked(BookingException):
     status_code=status.HTTP_409_CONFLICT
@@ -67,3 +66,13 @@ class IncorrectDataFormat(BookingException):
 class CannotDeleteBooking(BookingException):
     status_code=status.HTTP_409_CONFLICT
     detail="Не удалось удалить бронирование"
+
+
+# Ошибки по работе с парсером
+class TableNotFound(BookingException):
+    status_code=status.HTTP_404_NOT_FOUND
+    detail="Данная таблица не найдена"
+
+class ParserError(BookingException):
+    status_code=status.HTTP_409_CONFLICT
+    detail="Ошибка при работе парсера"

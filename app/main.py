@@ -14,6 +14,7 @@ from app.users.router import router as router_users
 from app.hotels.router import router as router_hotels
 from app.pages.router import router as router_pages
 from app.images.router import router as router_images
+from app.importer.router import router as router_importer
 from app.database import engine
 from app.config import settings
 from app.admin.admin import authentication_backend
@@ -32,6 +33,7 @@ app.include_router(router_bookings)
 app.include_router(router_hotels)
 app.include_router(router_pages)
 app.include_router(router_images)
+app.include_router(router_importer)
 
 # Разрешенные источники
 origins = ["*"]
